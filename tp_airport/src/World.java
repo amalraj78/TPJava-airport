@@ -37,7 +37,7 @@ public class World {
         for(int i = 0; i<(aeroportList.size()-1); i++){
             if (latitude != aeroportList.get(i).getLatitude()
                     && longitude != aeroportList.get(i).getLongitude()){
-                double distance = aeroportList.get(i).calculDistance()
+                //double distance = aeroportList.get(i).calculDistance()
             }
         }
     }
