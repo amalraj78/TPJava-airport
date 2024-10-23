@@ -29,4 +29,22 @@ public class Aeroport {
     public String toString() {
         return "L'aéroport de "+Name+", situé en "+country+", en "+latitude+", "+longitude+", et le code IATA est :"+IATA;
     }
+
+    public double calculDistance(Aeroport a) {
+
+        double lat1 = Math.toRadians(this.latitude);
+        double lon1 = Math.toRadians(this.longitude);
+        double lat2 = Math.toRadians(a.getLatitude());
+        double lon2 = Math.toRadians(a.getLongitude());
+
+        // Différences entre les coordonnées
+        double deltaLat = lat2 - lat1;
+        double deltaLon = lon2 - lon1;
+
+        // Calcul selon la formule
+        double distance = Math.pow(deltaLat, 2) + Math.pow(deltaLon * Math.cos((lat1 + lat2) / 2), 2);
+
+        return distance;
+    }
+
 }
