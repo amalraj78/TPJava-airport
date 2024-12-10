@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class World {
-    private List<Aeroport> aeroportList = new ArrayList<>();
+    public List<Aeroport> aeroportList = new ArrayList<>();
 
     public World(String fileName) {
         try {
@@ -47,7 +47,6 @@ public class World {
                 nearestAeroport = aeroport;
             }
         }
-
         return nearestAeroport; // Retourne l'aéroport le plus proche ou null si la liste est vide
     }
 

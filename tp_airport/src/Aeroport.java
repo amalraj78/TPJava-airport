@@ -27,7 +27,7 @@ public class Aeroport {
 
     @Override
     public String toString() {
-        return "L'aéroport de "+Name+", situé en "+country+", en "+latitude+", "+longitude+", et le code IATA est :"+IATA;
+        return Name+", situé en "+country+", en "+latitude+", "+longitude+", et le code IATA est :"+IATA;
     }
 
     public double calculDistance(Aeroport a) {
@@ -42,7 +42,7 @@ public class Aeroport {
         double deltaLon = lon2 - lon1;
 
         // Calcul selon la formule
-        double distance = Math.pow(deltaLat, 2) + Math.pow(deltaLon * Math.cos((lat1 + lat2) / 2), 2);
+        double distance = (Math.pow(deltaLat, 2) + Math.pow(deltaLon * Math.cos((lat1 + lat2) / 2), 2))*6371;
 
         return distance;
     }
