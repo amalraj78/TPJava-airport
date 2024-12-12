@@ -21,8 +21,8 @@ public class World {
                     String Name = fields[2];
                     String country = fields[5];
                     String iata = fields[9];
-                    double latitude = Double.parseDouble(fields[11]);
-                    double longitude = Double.parseDouble(fields[12]);
+                    double latitude = Double.parseDouble(fields[12]);
+                    double longitude = Double.parseDouble(fields[11]);
                     Aeroport aeroport = new Aeroport(iata, Name, country, latitude, longitude);
                     aeroportList.add(aeroport);
                 }

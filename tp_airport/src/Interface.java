@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.geometry.Point2D;
+import javafx.geometry.Point3D;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
@@ -13,16 +15,15 @@ import javafx.scene.transform.Translate;
 
 public class Interface extends Application {
     private double lastMouseY = 0;
-    public World w = new World("data/airport-codes_no_comma.csv");
+    public World w = new World("tp_airport/data/airport-codes_no_comma.csv");
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Hello world");
         Earth earth = new Earth();
         earth.displayYellowSphere(w);
-        Pane pane = new Pane(earth);
 
-        Scene ihm = new Scene(pane, 600, 400,true);
+        Scene ihm = new Scene(earth, 800, 800,true);
         primaryStage.setScene(ihm);
         primaryStage.show();
 
@@ -51,12 +52,14 @@ public class Interface extends Application {
             if (event.getButton()== MouseButton.SECONDARY && event.getEventType()==MouseEvent.MOUSE_CLICKED) {
                 PickResult pickResult = event.getPickResult();
                 if (pickResult.getIntersectedNode() != null) {
-                    double x = pickResult.getIntersectedPoint().getX();
-                    double y = pickResult.getIntersectedPoint().getY();
-                    double z = pickResult.getIntersectedPoint().getZ();
+                    double radius = 300;
+                    Point2D intersectionPoint = pickResult.getIntersectedTexCoord();
 
-                    double latitude = 180 * (0.5 - y) -180 ;
-                    double longitude = 360 * (x - 0.5) + 90 ;
+                    double x = intersectionPoint.getX();
+                    double y = intersectionPoint.getY();
+
+                    double latitude = 180*(0.5-y);
+                    double longitude = 360*(x-0.5);
 
                     System.out.println("Longitude: "+longitude+", Latitude: "+latitude);
 

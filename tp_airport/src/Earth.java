@@ -12,62 +12,67 @@ import java.util.ArrayList;
 public class Earth extends Group {
     private static final double RADIUS = 300;
     private Sphere sph;
-    private PhongMaterial phg,phg2;
     private Rotate ry;
 
 
     public Earth() {
         sph = new Sphere(300);
-        phg = new PhongMaterial();
-        phg2 = new PhongMaterial();
+        PhongMaterial phg = new PhongMaterial();
+        PhongMaterial phg2 = new PhongMaterial();
 
-
-        Image Texture = new Image("file:data/earth_lights_4800.png");
+        Image Texture = new Image("file:tp_airport/data/earth_lights_4800.png");
         phg.setDiffuseMap(Texture);
         sph.setMaterial(phg);
 
-        this.getChildren().add(sph);
-
         ry = new Rotate(0,Rotate.Y_AXIS);
-        sph.getTransforms().add(ry);
+        this.getTransforms().add(ry);
         AnimationTimer animationTimer = new AnimationTimer(){
             @Override
             public void handle(long time){
                 //System.out.println("Valeur de time : " + time);
-                    double angle = (time / 1000000000.0) * (360 / 15);
+                    double angle = (time / 1000000000.0) * (360 / 60);
                 ry.setAngle(angle);
             }
         };
         animationTimer.start();
+        this.getChildren().add(sph);
     }
 
-    public Sphere createSphere(Aeroport a, Color c){
-        double latitude = Math.toRadians(a.getLatitude() * 13); // Correction empirique de latitude
+    public Sphere createSphere(Aeroport a, Color c) {
+        Sphere coloredSph = new Sphere();
+        PhongMaterial phg2 = new PhongMaterial();
+        phg2.setDiffuseColor(c);
+        coloredSph.setMaterial(phg2);
+
+        double latitude = Math.toRadians(a.getLatitude());
         double longitude = Math.toRadians(a.getLongitude());
 
-        double x = RADIUS * Math.cos(latitude) * Math.sin(longitude);
-        double y = -RADIUS * Math.sin(latitude);
-        double z = -RADIUS * Math.cos(latitude) * Math.cos(longitude);
+        double radius = sph.getRadius();
 
-        Sphere minSph = new Sphere(2);
-        PhongMaterial phg2 = new PhongMaterial(c);
-        minSph.setMaterial(phg2);
+        // Conversion latitude/longitude en coordonnées 3D
+        double x = radius * Math.cos(latitude) * Math.cos(longitude);
+        double y = radius * Math.sin(latitude);
+        double z = radius * Math.cos(latitude) * Math.sin(longitude);
 
-        minSph.setTranslateX(x);
-        minSph.setTranslateX(y);
-        minSph.setTranslateX(z);
-        return minSph;
+        coloredSph.setTranslateX(x);
+        coloredSph.setTranslateY(-y); // Inversion Y pour correspondre à la convention graphique
+        coloredSph.setTranslateZ(z);
+
+        return coloredSph;
     }
 
+
     public void displayRedSphere(Aeroport a){
-        Sphere redSph = new Sphere();
+        Sphere redSph = new Sphere(5);
         redSph = createSphere(a,Color.RED);
+        //redSph = redSph.set
         this.getChildren().add(redSph);
     }
 
     public void displayYellowSphere(World w){
+        Sphere yellowSph = new Sphere(2);
         for(Aeroport aeroport : w.aeroportList){
-            Sphere yellowSph = createSphere(aeroport, Color.YELLOW);
+            yellowSph = createSphere(aeroport, Color.YELLOW);
             this.getChildren().add(yellowSph);
         }
     }
