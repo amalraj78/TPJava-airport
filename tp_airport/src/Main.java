@@ -15,10 +15,12 @@ public class Main {
         try {
             World w = new World ("tp_airport/data/airport-codes_no_comma.csv");
             BufferedReader br = new BufferedReader(new FileReader("tp_airport/data/JsonOrly.txt"));
-            String test = br.readLine();
-            JsonFlightFiller jSonFlightFiller = new JsonFlightFiller(test, w);
+            String jsonString = br.readLine();
+            JsonFlightFiller jSonFlightFiller = new JsonFlightFiller(jsonString, w);
+            System.out.println("ca marche ");
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("ca marche pas");
         }
     }
 }

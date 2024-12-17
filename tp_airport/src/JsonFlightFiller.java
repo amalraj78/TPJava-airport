@@ -13,10 +13,8 @@ import static java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 public class JsonFlightFiller {
     private ArrayList<Flight> list= new ArrayList<Flight>();
 
-    public JsonFlightFiller(String test, World w) {
-    }
 
-    public void JsonFlightFiller(String jsonString, World w) {
+    public JsonFlightFiller(String jsonString, World w) {
         try {
             InputStream is = new ByteArrayInputStream(jsonString.getBytes(StandardCharsets.UTF_8));
             JsonReader rdr = Json.createReader(is);
