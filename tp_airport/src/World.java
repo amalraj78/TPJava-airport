@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class World {
@@ -52,14 +51,10 @@ public class World {
 
     // Méthode pour calculer la distance entre deux points géographiques
     private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        final double R = 6371;
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c; // Distance en kilomètres
+        double deltaLat = lat2-lat1;
+        double deltaLon = (lon2-lon1)*Math.cos((lat2+lat1)/2);
+        double a=(deltaLon*deltaLon) + (deltaLat*deltaLat);
+        return a;
     }
 
     public Aeroport findByCode(String IATA){

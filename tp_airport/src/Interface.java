@@ -16,6 +16,9 @@ import javafx.scene.transform.Translate;
 public class Interface extends Application {
     private double lastMouseY = 0;
     public World w = new World("tp_airport/data/airport-codes_no_comma.csv");
+    private double mousePosX;
+    private double mousePosY;
+    Translate tz = new Translate();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -25,6 +28,7 @@ public class Interface extends Application {
 
         Scene ihm = new Scene(earth, 800, 800,true);
         primaryStage.setScene(ihm);
+
         primaryStage.show();
 
         PerspectiveCamera camera = new PerspectiveCamera(true);
@@ -36,17 +40,16 @@ public class Interface extends Application {
 
 
         ihm.addEventHandler(MouseEvent.ANY, event -> {
-
-            if (event.getButton()== MouseButton.PRIMARY && event.getEventType()==MouseEvent.MOUSE_CLICKED) {
-                double currentMouseY = event.getSceneY();
-                double deltaY = currentMouseY - lastMouseY;
-
-                // Appliquer la transformation de zoom en fonction du sens
-                Translate translate = new Translate(0, 0, deltaY * 0.5);
-                camera.getTransforms().add(translate);
-                lastMouseY = currentMouseY; // Mettre à jour la position précédente
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                mousePosX = event.getSceneX();
+                mousePosY = event.getSceneY();
+            }
+            if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+                tz.setZ((event.getSceneY() - mousePosY)*0.01);
+                camera.getTransforms().add(tz);
             }
         });
+
 
         ihm.addEventHandler(MouseEvent.ANY, event ->{
             if (event.getButton()== MouseButton.SECONDARY && event.getEventType()==MouseEvent.MOUSE_CLICKED) {

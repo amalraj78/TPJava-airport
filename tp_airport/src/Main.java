@@ -1,13 +1,25 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 public class Main {
 
-    public static void main(String[] args){
-        World w = new World ("tp_airport/data/airport-codes_no_comma.csv");
-        Aeroport paris = w.findNearest(2.316,48.866);
-        Aeroport cdg = w.findByCode("CDG");
-        System.out.println(paris);
-        System.out.println(cdg);
-        System.out.println("Nombre d'aéroports : " + w.aeroportList.size());
-
+    public static void main(String[] args) {
+//        World w = new World ("tp_airport/data/airport-codes_no_comma.csv");
+//        Aeroport paris = w.findNearest(48.866, 2.316);
+//        Aeroport cdg = w.findByCode("CDG");
+//        System.out.println(paris);
+//        System.out.println(cdg);
+//        System.out.println("Nombre d'aéroports : " + w.aeroportList.size());
+//
+//    }
+        try {
+            World w = new World ("tp_airport/data/airport-codes_no_comma.csv");
+            BufferedReader br = new BufferedReader(new FileReader("tp_airport/data/JsonOrly.txt"));
+            String test = br.readLine();
+            JsonFlightFiller jSonFlightFiller = new JsonFlightFiller(test, w);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
